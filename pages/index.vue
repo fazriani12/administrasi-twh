@@ -21,127 +21,21 @@
       </div>
 
       <div class="columns content is-normal">
-        <div class="column">
+        <div class="column" v-for="(item, index) in posts" :key="item.id">
           <div class="box">
-            <h3>Matapelajaran, {{ user.data.nama_guru }}!</h3>
+            <h3>{{ item.nama_matapelajaran }}, {{ user.data.nama_guru }}!</h3>
             <p></p>
             <p>Hari, Tanggal Mengajar</p>
             <p>jam awal-jam akhir | jumlah jam</p>
             <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
-            <p>Status Matapelajaran</p>
+            <p>{{ item.status }}</p>
             <button class="button is-info ">Absen</button>
             <button class="button is-warning">Edit</button>
             <button class="button is-danger ">Hapus</button>
           </div>
         </div>
-        <div class="column">
-          <div class="box">
-            <h3>Matapelajaran, {{ user.data.nama_guru }}!</h3>
-            <p></p>
-            <p>Hari, Tanggal Mengajar</p>
-            <p>jam awal-jam akhir | jumlah jam</p>
-            <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
-            <p>Status Matapelajaran</p>
-            <button class="button is-info ">Absen</button>
-            <button class="button is-warning">Edit</button>
-            <button class="button is-danger ">Hapus</button>
-          </div>
-        </div>
-        <div class="column">
-          <div class="box">
-            <h3>Matapelajaran, {{ user.data.nama_guru }}!</h3>
-            <p></p>
-            <p>Hari, Tanggal Mengajar</p>
-            <p>jam awal-jam akhir | jumlah jam</p>
-            <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
-            <p>Status Matapelajaran</p>
-            <button class="button is-info ">Absen</button>
-            <button class="button is-warning">Edit</button>
-            <button class="button is-danger ">Hapus</button>
-          </div>
-        </div>
-      </div>
-      <div class="columns content is-normal">
-        <div class="column">
-          <div class="box">
-            <h3>Matapelajaran, {{ user.data.nama_guru }}!</h3>
-            <p></p>
-            <p>Hari, Tanggal Mengajar</p>
-            <p>jam awal-jam akhir | jumlah jam</p>
-            <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
-            <p>Status Matapelajaran</p>
-            <button class="button is-info ">Absen</button>
-            <button class="button is-warning">Edit</button>
-            <button class="button is-danger ">Hapus</button>
-          </div>
-        </div>
-        <div class="column">
-          <div class="box">
-            <h3>Matapelajaran, {{ user.data.nama_guru }}!</h3>
-            <p></p>
-            <p>Hari, Tanggal Mengajar</p>
-            <p>jam awal-jam akhir | jumlah jam</p>
-            <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
-            <p>Status Matapelajaran</p>
-            <button class="button is-info ">Absen</button>
-            <button class="button is-warning">Edit</button>
-            <button class="button is-danger ">Hapus</button>
-          </div>
-        </div>
-        <div class="column">
-          <div class="box">
-            <h3>Matapelajaran, {{ user.data.nama_guru }}!</h3>
-            <p></p>
-            <p>Hari, Tanggal Mengajar</p>
-            <p>jam awal-jam akhir | jumlah jam</p>
-            <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
-            <p>Status Matapelajaran</p>
-            <button class="button is-info ">Absen</button>
-            <button class="button is-warning">Edit</button>
-            <button class="button is-danger ">Hapus</button>
-          </div>
-        </div>
-      </div>
-      <div class="columns content is-normal">
-        <div class="column">
-          <div class="box">
-            <h3>Matapelajaran, {{ user.data.nama_guru }}!</h3>
-            <p></p>
-            <p>Hari, Tanggal Mengajar</p>
-            <p>jam awal-jam akhir | jumlah jam</p>
-            <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
-            <p>Status Matapelajaran</p>
-            <button class="button is-info ">Absen</button>
-            <button class="button is-warning">Edit</button>
-            <button class="button is-danger ">Hapus</button>
-          </div>>
-        </div>
-        <div class="column">
-          <div class="box">
-            <h3>Matapelajaran, {{ user.data.nama_guru }}!</h3>
-            <p></p>
-            <p>Hari, Tanggal Mengajar</p>
-            <p>jam awal-jam akhir | jumlah jam</p>
-            <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
-            <p>Status Matapelajaran</p>
-            <button class="button is-info ">Absen</button>
-            <button class="button is-warning">Edit</button>
-            <button class="button is-danger ">Hapus</button>
-          </div>
-        </div>
-        <div class="column">
-          <div class="box">
-            <h3>Matapelajaran, {{ user.data.nama_guru }}!</h3>
-            <p></p>
-            <p>Hari, Tanggal Mengajar</p>
-            <p>jam awal-jam akhir | jumlah jam</p>
-            <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
-            <p>Status Matapelajaran</p>
-            <button class="button is-info ">Absen</button>
-            <button class="button is-warning">Edit</button>
-            <button class="button is-danger ">Hapus</button>
-          </div>
-        </div>
+
+
       </div>
     </div>
   </section>
@@ -152,11 +46,16 @@ export default {
   data() {
     return {
       user: this.$auth.user,
+      posts: [],
     }
   },
-  Mounted: () => {
-    console.log('test')
-
+  mounted() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+      this.$axios.get('http://localhost:8000/api/matapelajaran').then((res) => {
+        this.posts = res.data.data
+      })
+    })
   },
   methods: {
     async logout() {
