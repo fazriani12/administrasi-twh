@@ -7,7 +7,8 @@
                         <h1>Daftar Nama Kelas</h1>
                     </div>
                     <div class="column">
-                        <button class="button is-success is-medium">+ Tambah Data</button>
+                        <nuxt-link to="/kelas/create"><button class="button is-success is-medium">
+                                + Tambah Data</button></nuxt-link>
                     </div>
                     <div class="field has-addons">
                         <div class="control">
@@ -30,29 +31,49 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th>1</th>
+                    <tr v-for="(item, Kelas) in posts" :key="item.id">
+                        <th>{{ item.id }}</th>
                         <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="X-RPL."
-                                class="button is-white">X-RPL</a>
+                                class="button is-white">{{ item.nama_kelas }}</a>
                         </td>
-                        <td><button class="button is-warning">Edit</button>
-                            <button class="button is-danger ">Hapus</button>
+                        <td><nuxt-link :to="`/kelas/edit/${item.id}`" class="btn btn-info mr-2"><button
+                                    class="button is-warning">Edit</button></nuxt-link>
+                            <button @click="hapus(item.id)" class="button is-danger ">Hapus</button>
                         </td>
                     </tr>
-                    <tr>
-                        <th>2</th>
-                        <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="X-RPL."
-                                class="button is-white">XI-RPL</a>
-                        </td>
-                        <td><button class="button is-warning">Edit</button>
-                            <button class="button is-danger ">Hapus</button>
-                        </td>
-                    </tr>
-
                 </tbody>
             </table>
         </div>
     </section>
 </template>
-
+<script>
+export default {
+    data() {
+        return {
+            user: this.$auth.user,
+            posts: [],
+        }
+    },
+    mounted() {
+        this.$nextTick(() => {
+            this.$nuxt.$loading.start()
+            this.$axios.get('http://localhost:8000/api/kelas').then((res) => {
+                this.posts = res.data.data
+            })
+        })
+    },
+    methods: {
+        async hapus(id) {
+            await this.$axios.delete('http://localhost:8000/api/kelas/' + id).then((res) => {
+                if (res.status === 200) {
+                    this.$router.go(0)
+                } else {
+                    console.log(res)
+                }
+                console.log(res)
+            })
+        }
+    }
+}
+</script>
 

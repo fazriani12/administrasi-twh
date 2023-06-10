@@ -7,7 +7,8 @@
                         <h1>Daftar Nama Guru</h1>
                     </div>
                     <div class="column">
-                        <button class="button is-success is-medium">+ Tambah Data</button>
+                        <nuxt-link to="/kelas/create"><button class="button is-success is-medium">
+                                + Tambah Data</button></nuxt-link>
                     </div>
                     <div class="field has-addons">
                         <div class="control">

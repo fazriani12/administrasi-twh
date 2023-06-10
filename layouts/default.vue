@@ -28,7 +28,7 @@
               <a class="navbar-item" href="absen/daftarabsen">
                 Daftar Absen
               </a>
-              <a class="navbar-item" href="kelas/kelas">
+              <a class="navbar-item" href="kelas">
                 Kelas
               </a>
               <a class="navbar-item" href="matapelajaran/daftarmapel">
@@ -39,7 +39,7 @@
           <a class="navbar-item" href="siswa/siswa">
             Data Siswa
           </a>
-          <a class="navbar-item" href="guru/guru">
+          <a class="navbar-item" href="guru">
             Data guru
           </a>
         </div>

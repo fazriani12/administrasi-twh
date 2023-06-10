@@ -20,8 +20,8 @@
         </div>
       </div>
 
-      <div class="columns content is-normal">
-        <div class="column" v-for="(item, index) in posts" :key="item.id">
+      <div class="columns is-multiline is-mobile">
+        <div class="column is-half" v-for="(item, index) in posts" :key="item.id">
           <div class="box">
             <h3>{{ item.nama_matapelajaran }}, {{ user.data.nama_guru }}!</h3>
             <p></p>
@@ -34,8 +34,6 @@
             <button class="button is-danger ">Hapus</button>
           </div>
         </div>
-
-
       </div>
     </div>
   </section>

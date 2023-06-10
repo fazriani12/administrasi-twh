@@ -27,11 +27,10 @@
                 <div class="column is-half" v-for="(item, index) in matapelajarans" :key="item.id">
                     <div class="box">
                         <h3>{{ item.nama_matapelajaran }}</h3>
-                        {{ getKelasName(item.kelas_id) }}
-                        <p>{{ kelasName.id }}</p>
+                        <p>{{ item.nama_kelas }}</p>
                         <p>Hari</p>
                         <p>jam awal-jam akhir | jumlah jam</p>
-                        <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
+                        <p>{{ item.nama_guru }}</p>
                         <p>Status Matapelajaran</p>
                         <button class="button is-info is-info">Absen</button>
                         <button class="button is-warning">Edit</button>
@@ -49,8 +48,6 @@ export default {
         return {
             user: this.$auth.user,
             matapelajarans: [],
-            kelas: [],
-            kelasName: [],
         }
     },
     mounted() {
@@ -58,9 +55,6 @@ export default {
             this.$nuxt.$loading.start()
             this.$axios.get('http://localhost:8000/api/matapelajaran').then((res) => {
                 this.matapelajarans = res.data.data
-            })
-            this.$axios.get('http://localhost:8000/api/kelas').then((res) => {
-                this.kelas = res.data.data
             })
         })
     },
@@ -76,15 +70,7 @@ export default {
             this.$router.push('/login')
         },
 
-        getKelasName(id) {
-            const kelasItem = this.kelas.find(item => item.id === id);
-            if (kelasItem) {
-                this.kelasName = kelasItem.nama_kelas;
-            } else {
-                // Handle error jika item dengan id yang dicari tidak ditemukan
-                console.error("Item with the specified ID was not found.");
-            }
-        }
+
 
     },
 }
