@@ -33,9 +33,7 @@
                 <tbody>
                     <tr v-for="(item, Kelas) in posts" :key="item.id">
                         <th>{{ item.id }}</th>
-                        <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="X-RPL."
-                                class="button is-white">{{ item.nama_kelas }}</a>
-                        </td>
+                        <td>{{ item.nama_kelas }}</td>
                         <td><nuxt-link :to="`/kelas/edit/${item.id}`" class="btn btn-info mr-2"><button
                                     class="button is-warning">Edit</button></nuxt-link>
                             <button @click="hapus(item.id)" class="button is-danger ">Hapus</button>

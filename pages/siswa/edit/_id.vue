@@ -4,10 +4,11 @@
             <div class="columns is-mobile is-centered">
                 <div class="column is-full">
                     <div class="box">
-                        <h1>Tambah Data Siswa</h1>
+                        <h1>Edit Data Siswa</h1>
                     </div>
                 </div>
             </div>
+
             <form @submit="handleSubmit">
                 <div class="field">
                     <label class="label">Nama Siswa</label>
@@ -26,8 +27,8 @@
                     <label class="label">Kelas</label>
                     <div class="select is-info">
 
-                        <select v-model="selected">
-
+                        <select v-model="selected" @click="show">
+                            <option v-bind:value="post.kelas_id" selected disabled>{{ post.nama_kelas }}</option>
                             <option v-for="(item) in kelas" :key="item.id" v-bind:value="item.id">{{ item.nama_kelas
                             }}</option>
 
@@ -41,7 +42,7 @@
                         <button class="button is-success" type="submit">Submit</button>
                     </div>
                     <div class="control">
-                        <nuxt-link to="/siswa"><button class="button is-light">
+                        <nuxt-link to="#"><button class="button is-light">
                                 Cancel</button></nuxt-link>
                     </div>
                 </div>
@@ -53,10 +54,12 @@
 export default {
     data() {
         return {
+            postId: this.$route.params.id,
             post: {
                 nama_siswa: null,
                 nis: null,
-                kelas_id: null
+                kelas_id: null,
+                nama_kelas: null
             },
             kelas: [],
             selected: null
@@ -67,7 +70,10 @@ export default {
             this.$nuxt.$loading.start()
             this.$axios.get('http://localhost:8000/api/kelas').then((res) => {
                 this.kelas = res.data.data
-            })
+            }),
+                this.$axios.get('http://localhost:8000/api/siswa/' + this.postId).then((res) => {
+                    this.post = res.data.data
+                })
         })
     },
     methods: {
@@ -77,7 +83,8 @@ export default {
             formData.append('nama_siswa', this.post.nama_siswa)
             formData.append('nis', this.post.nis)
             formData.append('kelas_id', this.selected)
-            await this.$axios.post('http://localhost:8000/api/siswa', formData).then((res) => {
+            formData.append('_method', 'patch')
+            await this.$axios.post('http://localhost:8000/api/siswa/' + this.postId, formData).then((res) => {
                 if (res.status === 200) {
                     this.$router.go(-1)
                 } else {
@@ -85,7 +92,12 @@ export default {
                 }
                 console.log(res)
             })
+        },
+        show() {
+            console.log(this.post)
         }
     }
 };
 </script>
+
+

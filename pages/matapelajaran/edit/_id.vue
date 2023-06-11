@@ -8,96 +8,105 @@
                     </div>
                 </div>
             </div>
-
-            <div class="field">
-                <label class="label">Nama Matapelajaran</label>
-                <div class="control">
-                    <input class="input is-info" type="text" placeholder="Text input">
-                </div>
-            </div>
-
-            <div class="field">
-                <label class="label">Kelas</label>
-                <div class="select is-info">
-                    <select>
-                        <option value="X-TP">X-TP</option>
-                        <option value="X-RPL">X-RPL</option>
-                        <option value="X-TKR">X-TKR</option>
-                        <option value="XI-RPL">XI-RPL</option>
-                        <option value="XI-TKR">XI-TKR</option>
-                        <option value="XI-TP">XI-TP</option>
-                        <option value="XII-RPL">XII-RPL</option>
-                        <option value="XII-TKR">XII-TKR</option>
-                        <option value="XII-TP">XII-TP</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="field">
-                <label class="label">Hari</label>
-                <div class="select is-info">
-                    <select>
-                        <option value="Senin">Senin</option>
-                        <option value="Selasa">Selasa</option>
-                        <option value="Rabu">Rabu</option>
-                        <option value="Kamis">Kamis</option>
-                        <option value="Jumat">Jumat</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="field">
-                <div class="control">
-                    <label class="label">Jam Awal</label>
+            <form @submit="handleSubmit">
+                <div class="field">
+                    <label class="label">Nama Matapelajaran</label>
                     <div class="control">
-                        <input class="input is-info" type="time" id="timeInput">
+                        <input class="input is-info" v-model="post.nama_matapelajaran" type="text" placeholder="Text input">
                     </div>
                 </div>
-            </div>
 
-            <div class="field">
-                <div class="control">
-                    <label class="label">Jam Akhir</label>
-                    <div class="control">
-                        <input class="input is-info" type="time" id="timeInput">
+                <div class="field">
+                    <label class="label">Kelas</label>
+                    <div class="select is-info">
+                        <select>
+                            <option value="X-TP">X-TP</option>
+                            <option value="X-RPL">X-RPL</option>
+                            <option value="X-TKR">X-TKR</option>
+                            <option value="XI-RPL">XI-RPL</option>
+                            <option value="XI-TKR">XI-TKR</option>
+                            <option value="XI-TP">XI-TP</option>
+                            <option value="XII-RPL">XII-RPL</option>
+                            <option value="XII-TKR">XII-TKR</option>
+                            <option value="XII-TP">XII-TP</option>
+                        </select>
                     </div>
                 </div>
-            </div>
 
-            <div class="field">
-                <label class="label">Jumlah Jam</label>
-                <div class="control">
-                    <input class="input is-info" type="text" placeholder="Text input">
+                <div class="field">
+                    <label class="label">Nama Guru</label>
+                    <div class="control">
+                        <input class="input is-info" v-model="post.nama_guru" type="text" placeholder="Text input">
+                    </div>
                 </div>
-            </div>
 
-            <div class="field">
-                <label class="label">Nama Guru</label>
-                <div class="control">
-                    <input class="input is-info" type="text" placeholder="Text input">
+                <div class="field">
+                    <label class="label">Status Matapelajaran</label>
+                    <div class="select is-info">
+                        <select>
+                            <option value="Produktif">Produktif</option>
+                            <option value="Non Produktif">Non Produktif</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            <div class="field">
-                <label class="label">Status Matapelajaran</label>
-                <div class="select is-info">
-                    <select>
-                        <option value="Produktif">Produktif</option>
-                        <option value="Non Produktif">Non Produktif</option>
-                    </select>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-success">Submit</button>
+                    </div>
+                    <div class="control">
+                        <nuxt-link to="/kelas"><button class="button is-light">
+                                Cancel</button></nuxt-link>
+                    </div>
                 </div>
-            </div>
-
-            <div class="field is-grouped">
-                <div class="control">
-                    <button class="button is-success">Submit</button>
-                </div>
-                <div class="control">
-                    <button class="button is-link is-light">Cancel</button>
-                </div>
-            </div>
-
+            </form>
         </div>
     </section>
 </template>
+<script>
+export default {
+    data() {
+        return {
+            postId: this.$route.params.id,
+            post: {
+                id: null,
+                nama_matapelajaran: null,
+                nama_kelas: null,
+                nama_guru: null,
+                status: null,
+
+
+            }
+        };
+    },
+    mounted() {
+
+        this.$nextTick(() => {
+            this.$nuxt.$loading.start()
+            this.$axios.get('http://localhost:8000/api/matapelajaran/' + this.postId).then((res) => {
+                this.post = res.data.data
+            })
+        })
+    },
+    methods: {
+        async handleSubmit(event) {
+            const formData = new FormData()
+            event.preventDefault();
+            formData.append('nama_matapelajaran', this.post.nama_matapelajaran)
+            formData.append('nama_kelas', this.post.nama_kelas)
+            formData.append('nama_guru', this.post.nama_guru)
+            formData.append('status', this.post.status)
+            formData.append('_method', 'patch')
+            await this.$axios.post('http://localhost:8000/api/matapelajaran/' + this.postId, formData).then((res) => {
+                if (res.status === 200) {
+                    this.$router.go(-1)
+                } else {
+                    console.log(res)
+                }
+                console.log(res)
+            })
+        }
+    }
+}
+</script>
 

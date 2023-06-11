@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="navbar is-info">
+    <nav class="navbar is-white">
       <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
           <img src="~/assets/smk twh.jpg" alt="Gambar" width="28" height="28">
@@ -14,34 +14,34 @@
 
       <div id="navbarExampleTransparentExample" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item" href="index.vue">
-            Home
-          </a>
-          <a class="navbar-item" href="jadwal/jadwal">
-            Jadwal
-          </a>
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link" href="absen/daftarabsen">
+          <a class="navbar-item"><nuxt-link to="/jadwal">
+              Home
+            </nuxt-link></a>
+          <a class="navbar-item"><nuxt-link to="/absen">
               Absen
+            </nuxt-link></a>
+          <a class="navbar-item"><nuxt-link to="/jadwal">
+              Jadwal
+            </nuxt-link></a>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              More
             </a>
             <div class="navbar-dropdown is-boxed">
-              <a class="navbar-item" href="absen/daftarabsen">
-                Daftar Absen
-              </a>
-              <a class="navbar-item" href="kelas">
-                Kelas
-              </a>
-              <a class="navbar-item" href="matapelajaran/daftarmapel">
-                Matapelajaran
-              </a>
+              <a class="navbar-item"><nuxt-link to="/siswa">
+                  Data Siswa
+                </nuxt-link></a>
+              <a class="navbar-item"><nuxt-link to="/kelas">
+                  Data Kelas
+                </nuxt-link></a>
+              <a class="navbar-item"><nuxt-link to="/matapelajaran">
+                  Data Mapel
+                </nuxt-link></a>
+              <a class="navbar-item"><nuxt-link to="/guru">
+                  Data Guru
+                </nuxt-link></a>
             </div>
           </div>
-          <a class="navbar-item" href="siswa/siswa">
-            Data Siswa
-          </a>
-          <a class="navbar-item" href="guru">
-            Data guru
-          </a>
         </div>
 
         <div class="navbar-end">

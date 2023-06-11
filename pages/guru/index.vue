@@ -7,7 +7,7 @@
                         <h1>Daftar Nama Guru</h1>
                     </div>
                     <div class="column">
-                        <nuxt-link to="/kelas/create"><button class="button is-success is-medium">
+                        <nuxt-link to="/guru/create"><button class="button is-success is-medium">
                                 + Tambah Data</button></nuxt-link>
                     </div>
                     <div class="field has-addons">
@@ -33,27 +33,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th>1</th>
-                        <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C."
-                                title="Leicester City F.C.">Leicester City</a> <strong>(C)</strong>
-                        </td>
-                        <td>licestercity@mail.test</td>
-                        <td><button class="button is-warning">Edit</button>
-                            <button class="button is-danger ">Hapus</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>2</th>
-                        <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C."
-                                title="Leicester City F.C.">Leicester City</a> <strong>(C)</strong>
-                        </td>
-                        <td>licestercity@mail.test</td>
-                        <td><button class="button is-warning">Edit</button>
-                            <button class="button is-danger ">Hapus</button>
+                    <tr v-for="(item, Kelas) in posts" :key="item.id">
+                        <th>{{ item.id }}</th>
+                        <td>{{ item.nama_guru }}</td>
+                        <td>{{ item.email }}</td>
+                        <td><nuxt-link :to="`/guru/edit/${item.id}`" class="btn btn-info mr-2"><button
+                                    class="button is-warning">Edit</button></nuxt-link>
+                            <button @click="hapus(item.id)" class="button is-danger ">Hapus</button>
                         </td>
                     </tr>
-
                 </tbody>
             </table>
 
@@ -66,11 +54,16 @@ export default {
     data() {
         return {
             user: this.$auth.user,
+            posts: [],
         }
     },
-    Mounted: () => {
-        console.log('test')
-
+    mounted() {
+        this.$nextTick(() => {
+            this.$nuxt.$loading.start()
+            this.$axios.get('http://localhost:8000/api/guru').then((res) => {
+                this.posts = res.data.data
+            })
+        })
     },
     methods: {
         async logout() {
@@ -78,6 +71,16 @@ export default {
 
             this.$router.push('/login')
         },
+        async hapus(id) {
+            await this.$axios.delete('http://localhost:8000/api/guru/' + id).then((res) => {
+                if (res.status === 200) {
+                    this.$router.go(0)
+                } else {
+                    console.log(res)
+                }
+                console.log(res)
+            })
+        }
 
     },
 }

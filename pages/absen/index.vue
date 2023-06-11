@@ -4,50 +4,42 @@
             <div class="columns is-mobile is-centered">
                 <div class="column is-full">
                     <div class="box">
-                        <h1>Absen {Kelas}</h1>
-                        <h1>Mapel : {Matapelajaran}</h1>
-                        <h1>Guru : {Nama Guru}</h1>
+                        <h1>Daftar Matapelajaran</h1>
                     </div>
                     <div class="column">
-                        <button class="button is-success is-normal">+ Tambah Siswa</button>
-                        <button class="button is-warning is-normal">Edit</button>
+                        <nuxt-link to="/absen/create"><button class="button is-success is-medium">
+                                + Tambah Data</button></nuxt-link>
+                    </div>
+                    <div class="field has-addons">
+                        <div class="control">
+                            <input class="input" type="text" placeholder="Find a repository">
+                        </div>
+                        <div class="control">
+                            <a class="button is-info">
+                                Search
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="columns">
-                <div class="column box is-1">
-                    No
-                </div>
-                <div class="column box is-3">
-                    Nama
-                </div>
-                <div class="column box is-2">
-                    NIS
-                </div>
-                <div class="column box is-4">
-                    Tanggal
-                    <div class="columns is-mobile">
-                        <div class="column">1</div>
-                        <div class="column">2</div>
-                        <div class="column">3</div>
-                        <div class="column">4</div>
-                    </div>
-                </div>
-                <div class="column box is-2">
-                    Materi Pelajaran
-                </div>
-            </div>
-            <div class="columns">
-                <div class="column box">
-                    1
-                </div>
-                <div class="column box is-2">
-                    Pokok Bahasan
-                </div>
-
-            </div>
-
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><abbr title="kelas_id">Kode Kelas</abbr></th>
+                        <th><abbr title="nama_kelas">Nama Kelas</abbr></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, Kelas) in posts" :key="item.id">
+                        <th>{{ item.id }}</th>
+                        <td>{{ item.nama_kelas }}</td>
+                        <td><nuxt-link :to="`/absen/draft/${item.id}`" class="btn btn-info mr-2"><button
+                                    class="button is-info">Absen</button></nuxt-link>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </section>
 </template>
@@ -57,19 +49,16 @@ export default {
     data() {
         return {
             user: this.$auth.user,
+            posts: [],
         }
     },
-    Mounted: () => {
-        console.log('test')
-
-    },
-    methods: {
-        async logout() {
-            await this.$auth.logout()
-
-            this.$router.push('/login')
-        },
-
+    mounted() {
+        this.$nextTick(() => {
+            this.$nuxt.$loading.start()
+            this.$axios.get('http://localhost:8000/api/kelas').then((res) => {
+                this.posts = res.data.data
+            })
+        })
     },
 }
 </script>

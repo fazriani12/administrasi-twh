@@ -7,7 +7,8 @@
                         <h1>Daftar Nama Siswa</h1>
                     </div>
                     <div class="column">
-                        <button class="button is-success is-medium">+ Tambah Data</button>
+                        <nuxt-link to="/siswa/create"><button class="button is-success is-medium">
+                                + Tambah Data</button></nuxt-link>
                     </div>
                     <div class="field has-addons">
                         <div class="control">
@@ -33,54 +34,50 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th>1</th>
-                        <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C."
-                                title="Leicester City F.C.">Leicester City</a> <strong>(C)</strong>
-                        </td>
-                        <td>123456</td>
-                        <td>XI-RPL</td>
-                        <td><button class="button is-warning">Edit</button>
-                            <button class="button is-danger ">Hapus</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>2</th>
-                        <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C."
-                                title="Leicester City F.C.">Leicester City</a> <strong>(C)</strong>
-                        </td>
-                        <td>123456</td>
-                        <td>X-RPL</td>
-                        <td><button class="button is-warning">Edit</button>
-                            <button class="button is-danger ">Hapus</button>
+                    <tr v-for="(item, index) in siswas" :key="item.id">
+                        <th>{{ index + 1 }}</th>
+                        <td>{{ item.nama_siswa }}</td>
+                        <td>{{ item.nis }}</td>
+                        <td>{{ item.nama_kelas }}</td>
+                        <td><nuxt-link :to="`/siswa/edit/${item.id}`" class="btn btn-info mr-2"><button
+                                    class="button is-warning">Edit</button></nuxt-link>
+                            <button @click="hapus(item.id)" class="button is-danger ">Hapus</button>
                         </td>
                     </tr>
-
                 </tbody>
             </table>
 
         </div>
     </section>
 </template>
-
 <script>
 export default {
     data() {
         return {
             user: this.$auth.user,
+            siswas: [],
         }
     },
-    Mounted: () => {
-        console.log('test')
-
+    mounted() {
+        this.$nextTick(() => {
+            this.$nuxt.$loading.start()
+            this.$axios.get('http://localhost:8000/api/siswa').then((res) => {
+                this.siswas = res.data.data
+            })
+        })
     },
     methods: {
-        async logout() {
-            await this.$auth.logout()
-
-            this.$router.push('/login')
-        },
-
-    },
+        async hapus(id) {
+            await this.$axios.delete('http://localhost:8000/api/siswa/' + id).then((res) => {
+                if (res.status === 200) {
+                    this.$router.go(0)
+                } else {
+                    console.log(res)
+                }
+                console.log(res)
+            })
+        }
+    }
 }
 </script>
+

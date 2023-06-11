@@ -25,9 +25,9 @@
           <div class="box">
             <h3>{{ item.nama_matapelajaran }}, {{ user.data.nama_guru }}!</h3>
             <p></p>
-            <p>Hari, Tanggal Mengajar</p>
+            <p>{{ item.hari }}</p>
             <p>jam awal-jam akhir | jumlah jam</p>
-            <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
+            <p>{{ user.data.nama_guru }}</p>
             <p>{{ item.status }}</p>
             <button class="button is-info ">Absen</button>
             <button class="button is-warning">Edit</button>
@@ -50,7 +50,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
-      this.$axios.get('http://localhost:8000/api/matapelajaran').then((res) => {
+      this.$axios.get('http://localhost:8000/api/jadwal').then((res) => {
         this.posts = res.data.data
       })
     })

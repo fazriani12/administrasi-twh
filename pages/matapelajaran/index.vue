@@ -7,7 +7,8 @@
                         <h1>Daftar Matapelajaran</h1>
                     </div>
                     <div class="column">
-                        <button class="button is-success is-medium">+ Tambah Data</button>
+                        <nuxt-link to="/matapelajaran/create"><button class="button is-success is-medium">
+                                + Tambah Data</button></nuxt-link>
                     </div>
                     <div class="field has-addons">
                         <div class="control">
@@ -28,13 +29,13 @@
                     <div class="box">
                         <h3>{{ item.nama_matapelajaran }}</h3>
                         <p>{{ item.nama_kelas }}</p>
-                        <p>Hari</p>
-                        <p>jam awal-jam akhir | jumlah jam</p>
                         <p>{{ item.nama_guru }}</p>
-                        <p>Status Matapelajaran</p>
-                        <button class="button is-info is-info">Absen</button>
-                        <button class="button is-warning">Edit</button>
-                        <button class="button is-danger ">Hapus</button>
+                        <p>{{ item.status }}</p>
+                        <nuxt-link to="/absen" class="btn btn-info mr-2"><button
+                                class="button is-info is-info">Absen</button></nuxt-link>
+                        <nuxt-link :to="`/matapelajaran/edit/${item.id}`" class="btn btn-info mr-2"><button
+                                class="button is-warning">Edit</button></nuxt-link>
+                        <button @click="hapus(item.id)" class="button is-danger ">Hapus</button>
                     </div>
                 </div>
             </div>
@@ -59,19 +60,17 @@ export default {
         })
     },
 
-    computed: {
-
-    },
-
     methods: {
-        async logout() {
-            await this.$auth.logout()
-
-            this.$router.push('/login')
-        },
-
-
-
-    },
+        async hapus(id) {
+            await this.$axios.delete('http://localhost:8000/api/matapelajaran/' + id).then((res) => {
+                if (res.status === 200) {
+                    this.$router.go(0)
+                } else {
+                    console.log(res)
+                }
+                console.log(res)
+            })
+        }
+    }
 }
 </script>
