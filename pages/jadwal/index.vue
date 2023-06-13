@@ -29,7 +29,7 @@
                         <h3>{{ item.nama_matapelajaran }}, {{ user.data.nama_guru }}!</h3>
                         <p>{{ item.nama_kelas }}</p>
                         <p>{{ item.hari }}</p>
-                        <p>{{ item.jam_awal }} - {{ item.jam_akhir }} | {{ item.jml_jam }}</p>
+                        <p>{{ item.jam_awal }} - {{ item.jam_akhir }} | {{ item.jml_jam }} Jam Pelajaran</p>
                         <p>{{ user.data.nama_guru }}</p>
                         <p>{{ item.status }}</p>
                         <nuxt-link to="/absen" class="btn btn-info mr-2"><button
@@ -63,10 +63,6 @@ export default {
         })
     },
     methods: {
-        async logout() {
-            await this.$auth.logout()
-            this.$router.push('/login')
-        },
         async hapus(id) {
             await this.$axios.delete('http://localhost:8000/api/jadwal/' + id).then((res) => {
                 if (res.status === 200) {

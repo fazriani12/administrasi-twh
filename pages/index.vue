@@ -24,9 +24,10 @@
         <div class="column is-half" v-for="(item, index) in posts" :key="item.id">
           <div class="box">
             <h3>{{ item.nama_matapelajaran }}, {{ user.data.nama_guru }}!</h3>
-            <p>{{ item.kelas }}</p>
+            <p>{{ item.nama_kelas }}</p>
             <p>{{ item.hari }}</p>
-            <p>{{ item.jam_awal }} - {{ item.jam_akhir }} | {{ jml_jam }}</p>
+            <p>{{ item.jam_awal }} - {{ item.jam_akhir }} | {{ item.jml_jam }} Jam Pelajaran</p>
+            <p>{{ item.status }}</p>
             <p>{{ user.data.nama_guru }}</p>
             <nuxt-link :to="`/absen/${item.id}`" class="btn btn-info mr-2"><button
                 class="button is-info is-info">Absen</button></nuxt-link>

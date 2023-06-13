@@ -89,7 +89,7 @@
 
                 <div class="field">
                     <div class="control">
-                        <label class="label">Jumlah Bobot</label>
+                        <label class="label">Jumlah Jam</label>
                         <div class="control">
                             <input class="input is-info" v-model="post.jml_jam" type="textinput">
                         </div>

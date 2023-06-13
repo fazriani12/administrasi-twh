@@ -33,8 +33,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, Kelas) in gurus" :key="item.id">
-                        <th>{{ item.id }}</th>
+                    <tr v-for="(item, index) in gurus" :key="item.id">
+                        <th>{{ index + 1 }}</th>
                         <td>{{ item.nama_guru }}</td>
                         <td>{{ item.email }}</td>
                         <td><nuxt-link :to="`/guru/edit/${item.id}`" class="btn btn-info mr-2"><button

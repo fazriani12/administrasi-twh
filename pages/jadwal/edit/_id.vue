@@ -13,7 +13,7 @@
                 <div class="field">
                     <label class="label">Nama Matapelajaran</label>
                     <div class="select is-info">
-                        <select v-model="selectedMapel">
+                        <select v-model.lazy="selectedMapel">
                             <option :value="null" selected>{{ post.nama_matapelajaran }}</option>
                             <option v-for="(item) in matapelajarans" :key="item.id" v-bind:value="item.id">
                                 {{
@@ -92,6 +92,15 @@
                     </div>
                 </div>
 
+                <div class="field">
+                    <div class="control">
+                        <label class="label">Jumlah Jam</label>
+                        <div class="control">
+                            <input class="input is-info" v-model="post.jml_jam" type="textinput">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="field is-grouped">
                     <div class="control">
                         <button class="button is-success" type="submit">Submit</button>
@@ -113,8 +122,11 @@ export default {
             post: {
                 id: null,
                 nama_matapelajaran: null,
+                matapelajarans_id: null,
                 nama_kelas: null,
+                kelas_id: null,
                 nama_guru: null,
+                gurus_id: null,
                 hari: null,
                 status: null,
                 jam_awal: null,
@@ -135,15 +147,15 @@ export default {
 
         this.$nextTick(() => {
             this.$nuxt.$loading.start()
+            this.$axios.get('http://localhost:8000/api/matapelajaran').then((res) => {
+                this.matapelajarans = res.data.data
+            })
             this.$axios.get('http://localhost:8000/api/kelas').then((res) => {
                 this.kelas = res.data.data
             })
 
             this.$axios.get('http://localhost:8000/api/guru').then((res) => {
-                this.gurus = res.data.data
-            })
-            this.$axios.get('http://localhost:8000/api/matapelajaran').then((res) => {
-                this.matapelajarans = res.data.data
+                this.guru = res.data.data
             })
             this.$axios.get('http://localhost:8000/api/jadwal/' + this.postId).then((res) => {
                 this.post = res.data.data[0]
@@ -158,9 +170,9 @@ export default {
             formData.append('jam_akhir', this.post.jam_akhir)
             formData.append('jml_jam', this.post.jml_jam)
             if (this.selectedMapel === null) {
-                formData.append('matapelajaran_id', this.post.matapelajaran_id)
+                formData.append('matapelajarans_id', this.post.matapelajarans_id)
             } else {
-                formData.append('matapelajaran_id', this.selectedMapel)
+                formData.append('matapelajarans_id', this.selectedMapel)
             }
             if (this.selectedKelas === null) {
                 formData.append('kelas_id', this.post.kelas_id)
@@ -178,9 +190,9 @@ export default {
                 formData.append('status', this.selectedStatus)
             }
             if (this.selectedHari === null) {
-                formData.append('status', this.post.hari)
+                formData.append('hari', this.post.hari)
             } else {
-                formData.append('status', this.selectedHari)
+                formData.append('hari', this.selectedHari)
             }
             formData.append('_method', 'patch')
             await this.$axios.post('http://localhost:8000/api/jadwal/' + this.postId, formData).then((res) => {
