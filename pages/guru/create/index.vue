@@ -15,10 +15,13 @@
                         <input class="input is-info" v-model="post.nama_guru" type="text" placeholder="Text input">
                     </div>
                 </div>
+                <p>{{ selectedEmail }}</p>
                 <div class="field">
                     <label class="label">Email</label>
-                    <div class="control">
-                        <input class="input is-info" v-model="post.email" type="text" placeholder="Text input">
+                    <div class="select is-info">
+                        <select v-model.lazy="selectedEmail" @click="show">
+                            <option :value="null" selected>{{ post.email }}</option>
+                        </select>
                     </div>
                 </div>
                 <div class="field is-grouped">
@@ -40,15 +43,29 @@ export default {
         return {
             post: {
                 nama_guru: null,
-                email: null
-            }
+                user_id: null,
+            },
+            users: [],
+            selectedEmail: null
         };
+    },
+    mounted() {
+        this.$nextTick(() => {
+            this.$nuxt.$loading.start()
+            this.$axios.get('http://localhost:8000/api/guru').then((res) => {
+                this.gurus = res.data.data
+            })
+            this.$axios.get('http://localhost:8000/api/user').then((res) => {
+                this.users = res.data.data
+            })
+        })
     },
     methods: {
         async handleSubmit(event) {
             const formData = new FormData()
             event.preventDefault();
             formData.append('nama_guru', this.post.nama_guru)
+            formData.append('user_id', this.selectedEmail)
             await this.$axios.post('http://localhost:8000/api/guru', formData).then((res) => {
                 if (res.status === 200) {
                     this.$router.go(-1)

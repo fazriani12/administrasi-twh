@@ -32,7 +32,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="(item, Kelas) in posts" :key="item.id">
-                        <th>{{ item.id }}</th>
+                        <th>{{ Kelas + 1 }}</th>
                         <td>{{ item.nama_kelas }}</td>
                         <td><nuxt-link :to="`/kelas/edit/${item.id}`" class="btn btn-info mr-2"><button
                                     class="button is-warning">Edit</button></nuxt-link>

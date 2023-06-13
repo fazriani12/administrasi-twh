@@ -7,7 +7,8 @@
                         <h1>Jadwal Mengajar, {{ user.data.nama_guru }}!</h1>
                     </div>
                     <div class="column">
-                        <button class="button is-success is-medium">+ Tambah Data</button>
+                        <nuxt-link to="/jadwal/create"><button class="button is-success is-medium">
+                                + Tambah Data</button></nuxt-link>
                     </div>
                     <div class="field has-addons">
                         <div class="control">
@@ -22,126 +23,20 @@
                 </div>
             </div>
 
-            <div class="columns content is-normal">
-                <div class="column">
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-half" v-for="(item, index) in jadwals" :key="item.id">
                     <div class="box">
-                        <h3>Matapelajaran, {{ user.data.nama_guru }}!</h3>
-                        <p></p>
-                        <p>Hari, Tanggal Mengajar</p>
-                        <p>jam awal-jam akhir | jumlah jam</p>
-                        <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
-                        <p>Status Matapelajaran</p>
-                        <button class="button is-info ">Absen</button>
-                        <button class="button is-warning">Edit</button>
-                        <button class="button is-danger ">Hapus</button>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="box">
-                        <h3>Matapelajaran, {{ user.data.nama_guru }}!</h3>
-                        <p></p>
-                        <p>Hari, Tanggal Mengajar</p>
-                        <p>jam awal-jam akhir | jumlah jam</p>
-                        <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
-                        <p>Status Matapelajaran</p>
-                        <button class="button is-info ">Absen</button>
-                        <button class="button is-warning">Edit</button>
-                        <button class="button is-danger ">Hapus</button>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="box">
-                        <h3>Matapelajaran, {{ user.data.nama_guru }}!</h3>
-                        <p></p>
-                        <p>Hari, Tanggal Mengajar</p>
-                        <p>jam awal-jam akhir | jumlah jam</p>
-                        <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
-                        <p>Status Matapelajaran</p>
-                        <button class="button is-info ">Absen</button>
-                        <button class="button is-warning">Edit</button>
-                        <button class="button is-danger ">Hapus</button>
-                    </div>
-                </div>
-            </div>
-            <div class="columns content is-normal">
-                <div class="column">
-                    <div class="box">
-                        <h3>Matapelajaran, {{ user.data.nama_guru }}!</h3>
-                        <p></p>
-                        <p>Hari, Tanggal Mengajar</p>
-                        <p>jam awal-jam akhir | jumlah jam</p>
-                        <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
-                        <p>Status Matapelajaran</p>
-                        <button class="button is-info ">Absen</button>
-                        <button class="button is-warning">Edit</button>
-                        <button class="button is-danger ">Hapus</button>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="box">
-                        <h3>Matapelajaran, {{ user.data.nama_guru }}!</h3>
-                        <p></p>
-                        <p>Hari, Tanggal Mengajar</p>
-                        <p>jam awal-jam akhir | jumlah jam</p>
-                        <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
-                        <p>Status Matapelajaran</p>
-                        <button class="button is-info ">Absen</button>
-                        <button class="button is-warning">Edit</button>
-                        <button class="button is-danger ">Hapus</button>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="box">
-                        <h3>Matapelajaran, {{ user.data.nama_guru }}!</h3>
-                        <p></p>
-                        <p>Hari, Tanggal Mengajar</p>
-                        <p>jam awal-jam akhir | jumlah jam</p>
-                        <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
-                        <p>Status Matapelajaran</p>
-                        <button class="button is-info ">Absen</button>
-                        <button class="button is-warning">Edit</button>
-                        <button class="button is-danger ">Hapus</button>
-                    </div>
-                </div>
-            </div>
-            <div class="columns content is-normal">
-                <div class="column">
-                    <div class="box">
-                        <h3>Matapelajaran, {{ user.data.nama_guru }}!</h3>
-                        <p></p>
-                        <p>Hari, Tanggal Mengajar</p>
-                        <p>jam awal-jam akhir | jumlah jam</p>
-                        <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
-                        <p>Status Matapelajaran</p>
-                        <button class="button is-info ">Absen</button>
-                        <button class="button is-warning">Edit</button>
-                        <button class="button is-danger ">Hapus</button>
-                    </div>>
-                </div>
-                <div class="column">
-                    <div class="box">
-                        <h3>Matapelajaran, {{ user.data.nama_guru }}!</h3>
-                        <p></p>
-                        <p>Hari, Tanggal Mengajar</p>
-                        <p>jam awal-jam akhir | jumlah jam</p>
-                        <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
-                        <p>Status Matapelajaran</p>
-                        <button class="button is-info ">Absen</button>
-                        <button class="button is-warning">Edit</button>
-                        <button class="button is-danger ">Hapus</button>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="box">
-                        <h3>Matapelajaran, {{ user.data.nama_guru }}!</h3>
-                        <p></p>
-                        <p>Hari, Tanggal Mengajar</p>
-                        <p>jam awal-jam akhir | jumlah jam</p>
-                        <p>{{ user.data.nama_guru }} | {{ user.data.id }}</p>
-                        <p>Status Matapelajaran</p>
-                        <button class="button is-info ">Absen</button>
-                        <button class="button is-warning">Edit</button>
-                        <button class="button is-danger ">Hapus</button>
+                        <h3>{{ item.nama_matapelajaran }}, {{ user.data.nama_guru }}!</h3>
+                        <p>{{ item.nama_kelas }}</p>
+                        <p>{{ item.hari }}</p>
+                        <p>{{ item.jam_awal }} - {{ item.jam_akhir }} | {{ item.jml_jam }}</p>
+                        <p>{{ user.data.nama_guru }}</p>
+                        <p>{{ item.status }}</p>
+                        <nuxt-link to="/absen" class="btn btn-info mr-2"><button
+                                class="button is-info is-info">Absen</button></nuxt-link>
+                        <nuxt-link :to="`/jadwal/edit/${item.id}`" class="btn btn-info mr-2"><button
+                                class="button is-warning">Edit</button></nuxt-link>
+                        <button @click="hapus(item.id)" class="button is-danger ">Hapus</button>
                     </div>
                 </div>
             </div>
@@ -156,18 +51,32 @@ export default {
     data() {
         return {
             user: this.$auth.user,
+            jadwals: [],
         }
     },
-    Mounted: () => {
-        console.log('test')
-
+    mounted() {
+        this.$nextTick(() => {
+            this.$nuxt.$loading.start()
+            this.$axios.get('http://localhost:8000/api/jadwal').then((res) => {
+                this.jadwals = res.data.data
+            })
+        })
     },
     methods: {
         async logout() {
             await this.$auth.logout()
-
             this.$router.push('/login')
         },
+        async hapus(id) {
+            await this.$axios.delete('http://localhost:8000/api/jadwal/' + id).then((res) => {
+                if (res.status === 200) {
+                    this.$router.go(0)
+                } else {
+                    console.log(res)
+                }
+                console.log(res)
+            })
+        }
 
     },
 }

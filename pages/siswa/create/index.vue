@@ -25,14 +25,9 @@
                 <div class="field">
                     <label class="label">Kelas</label>
                     <div class="select is-info">
-
                         <select v-model="selected">
-
                             <option v-for="(item) in kelas" :key="item.id" v-bind:value="item.id">{{ item.nama_kelas
                             }}</option>
-
-
-
                         </select>
                     </div>
                 </div>
@@ -67,6 +62,9 @@ export default {
             this.$nuxt.$loading.start()
             this.$axios.get('http://localhost:8000/api/kelas').then((res) => {
                 this.kelas = res.data.data
+            })
+            this.$axios.get('http://localhost:8000/api/siswa').then((res) => {
+                this.siswa = res.data.data
             })
         })
     },

@@ -14,7 +14,7 @@
 
       <div id="navbarExampleTransparentExample" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item"><nuxt-link to="/jadwal">
+          <a class="navbar-item"><nuxt-link to="/">
               Home
             </nuxt-link></a>
           <a class="navbar-item"><nuxt-link to="/absen">

@@ -33,7 +33,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, Kelas) in posts" :key="item.id">
+                    <tr v-for="(item, Kelas) in gurus" :key="item.id">
                         <th>{{ item.id }}</th>
                         <td>{{ item.nama_guru }}</td>
                         <td>{{ item.email }}</td>
@@ -54,14 +54,14 @@ export default {
     data() {
         return {
             user: this.$auth.user,
-            posts: [],
+            gurus: [],
         }
     },
     mounted() {
         this.$nextTick(() => {
             this.$nuxt.$loading.start()
             this.$axios.get('http://localhost:8000/api/guru').then((res) => {
-                this.posts = res.data.data
+                this.gurus = res.data.data
             })
         })
     },

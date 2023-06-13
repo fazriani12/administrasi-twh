@@ -13,6 +13,7 @@
                 <div class="field">
                     <label class="label">Nama Siswa</label>
                     <div class="control">
+                        <input type="text" name="" id="" v-model="post.kelas_id" hidden>
                         <input class="input is-info" v-model="post.nama_siswa" type="text" placeholder="Text input">
                     </div>
                 </div>
@@ -27,13 +28,10 @@
                     <label class="label">Kelas</label>
                     <div class="select is-info">
 
-                        <select v-model="selected" @click="show">
-                            <option v-bind:value="post.kelas_id" selected disabled>{{ post.nama_kelas }}</option>
+                        <select v-model.lazy="selected" @click="show">
+                            <option :value="null" selected>{{ post.nama_kelas }}</option>
                             <option v-for="(item) in kelas" :key="item.id" v-bind:value="item.id">{{ item.nama_kelas
                             }}</option>
-
-
-
                         </select>
                     </div>
                 </div>
@@ -42,7 +40,7 @@
                         <button class="button is-success" type="submit">Submit</button>
                     </div>
                     <div class="control">
-                        <nuxt-link to="#"><button class="button is-light">
+                        <nuxt-link to="/siswa"><button class="button is-light">
                                 Cancel</button></nuxt-link>
                     </div>
                 </div>
@@ -70,10 +68,11 @@ export default {
             this.$nuxt.$loading.start()
             this.$axios.get('http://localhost:8000/api/kelas').then((res) => {
                 this.kelas = res.data.data
-            }),
-                this.$axios.get('http://localhost:8000/api/siswa/' + this.postId).then((res) => {
-                    this.post = res.data.data
-                })
+            })
+            this.$axios.get('http://localhost:8000/api/siswa/' + this.postId).then((res) => {
+                this.post = res.data.data[0]
+            })
+            this.selected = this.post.kelas_id
         })
     },
     methods: {
@@ -82,7 +81,11 @@ export default {
             event.preventDefault();
             formData.append('nama_siswa', this.post.nama_siswa)
             formData.append('nis', this.post.nis)
-            formData.append('kelas_id', this.selected)
+            if (this.selected === null) {
+                formData.append('kelas_id', this.post.kelas_id)
+            } else {
+                formData.append('kelas_id', this.selected)
+            }
             formData.append('_method', 'patch')
             await this.$axios.post('http://localhost:8000/api/siswa/' + this.postId, formData).then((res) => {
                 if (res.status === 200) {
@@ -94,10 +97,8 @@ export default {
             })
         },
         show() {
-            console.log(this.post)
+            console.log(this.post.id)
         }
     }
 };
 </script>
-
-
