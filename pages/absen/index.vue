@@ -12,9 +12,16 @@
             <div class="tahun-column">
                 <h3>Bulan/Tahun: {{ bulan }}/{{ tahun }}</h3>
             </div>
+            <div class="column">
+                <nuxt-link to="/absen/create"><button class="button is-success is-medium">
+                        + Tambah Data</button></nuxt-link>
+            </div>
         </div>
         <div class="box">
             <b-table :data="data" :columns="columnsTabel" :paginated="isPaginated" :per-page="perPage"></b-table>
+        </div>
+        <div class=" box pokokBahasan-column">
+            <h3>Pokok Bahasan: {{ pokokBahasan }}</h3>
         </div>
     </div>
 </template>
@@ -52,13 +59,14 @@ export default {
                 {
                     field: 'absensi',
                     label: 'Kehadiran',
+
                 }
             ],
             namaGuru: '',
             namaMatapelajaran: '',
             tahun: '',
             bulan: '',
-            index: '0'
+            pokokBahasan: ''
         };
     },
     mounted() {
@@ -72,6 +80,7 @@ export default {
                     this.namaMatapelajaran = this.data[0].nama_matapelajaran; // Mengambil nama mata pelajaran dari data pertama
                     this.tahun = this.data[0].tahun;
                     this.bulan = this.data[0].bulan;
+                    this.pokokBahasan = this.data[0].pokok_bahasan;
                     this.$nuxt.$loading.finish();
                 })
                 .catch((error) => {

@@ -1,55 +1,88 @@
 <template>
-    <section class="section">
-        <div class="container">
-            <div class="columns is-mobile is-centered">
-                <div class="column is-full">
-                    <div class="box">
-                        <h1>Tambah Absen Baru</h1>
-                    </div>
-                </div>
+    <div>
+        <div class="box">
+            <div class="nama-guru-column">
+                <h3>Nama Guru: {{ namaGuru }}</h3>
+                <p></p>
             </div>
 
-            <div class="field">
-                <label class="label">Nama Matapelajaran</label>
-                <div class="control">
-                    <input class="input is-info" type="text" placeholder="Text input">
-                </div>
+            <div class="nama-matapelajaran-column">
+                <h3>Nama Mata Pelajaran: {{ namaMatapelajaran }}</h3>
             </div>
-
-            <div class="field">
-                <label class="label">Kelas</label>
-                <div class="select is-info">
-                    <select>
-                        <option value="X-TP">X-TP</option>
-                        <option value="X-RPL">X-RPL</option>
-                        <option value="X-TKR">X-TKR</option>
-                        <option value="XI-RPL">XI-RPL</option>
-                        <option value="XI-TKR">XI-TKR</option>
-                        <option value="XI-TP">XI-TP</option>
-                        <option value="XII-RPL">XII-RPL</option>
-                        <option value="XII-TKR">XII-TKR</option>
-                        <option value="XII-TP">XII-TP</option>
-                    </select>
-                </div>
+            <div class="tahun-column">
+                <h3>Bulan/Tahun: {{ bulan }}/{{ tahun }}</h3>
             </div>
-
-            <div class="field">
-                <label class="label">Nama Guru</label>
-                <div class="control">
-                    <input class="input is-info" type="text" placeholder="Text input">
-                </div>
-            </div>
-
-            <div class="field is-grouped">
-                <div class="control">
-                    <button class="button is-success">Submit</button>
-                </div>
-                <div class="control">
-                    <button class="button is-link is-light">Cancel</button>
-                </div>
-            </div>
-
         </div>
-    </section>
+        <div class="box">
+            <b-table :data="data" :columns="columnsTabel" :paginated="isPaginated" :per-page="perPage"></b-table>
+        </div>
+        <div class=" box pokokBahasan-column">
+            <h3>Pokok Bahasan: {{ pokokBahasan }}</h3>
+        </div>
+    </div>
 </template>
 
+<script>
+export default {
+    data() {
+        return {
+            isPaginated: true,
+            perPage: 5,
+            data: [],
+            columnsTabel: [
+                {
+                    field: 'nama_siswa',
+                    label: 'Nama Siswa',
+                    searchable: true,
+                },
+                {
+                    field: 'nis',
+                    label: 'NIS',
+                },
+                {
+                    field: 'nama_kelas',
+                    label: 'Kelas',
+                },
+                {
+                    field: 'nama_matapelajaran',
+                    label: 'Mapel',
+                },
+                {
+                    field: 'tanggal',
+                    label: 'Tanggal',
+                    centered: true,
+                },
+                {
+                    field: 'absensi',
+                    label: 'Kehadiran',
+                }
+            ],
+            namaGuru: '',
+            namaMatapelajaran: '',
+            tahun: '',
+            bulan: '',
+            pokokBahasan: ''
+        };
+    },
+    mounted() {
+        this.$nextTick(() => {
+            this.$nuxt.$loading.start();
+            this.$axios
+                .get('http://localhost:8000/api/absen')
+                .then((res) => {
+                    this.data = res.data.data;
+                    this.namaGuru = this.data[0].nama_guru; // Mengambil nama guru dari data pertama
+                    this.namaMatapelajaran = this.data[0].nama_matapelajaran; // Mengambil nama mata pelajaran dari data pertama
+                    this.tahun = this.data[0].tahun;
+                    this.bulan = this.data[0].bulan;
+                    this.pokokBahasan = this.data[0].pokok_bahasan;
+                    this.$nuxt.$loading.finish();
+                })
+                .catch((error) => {
+                    console.error(error);
+                    this.$nuxt.$loading.fail();
+                });
+        });
+    },
+};
+</script>

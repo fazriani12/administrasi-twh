@@ -32,7 +32,7 @@
                         <p>{{ item.jam_awal }} - {{ item.jam_akhir }} | {{ item.jml_jam }} Jam Pelajaran</p>
                         <p>{{ user.data.nama_guru }}</p>
                         <p>{{ item.status }}</p>
-                        <nuxt-link to="/absen" class="btn btn-info mr-2"><button
+                        <nuxt-link :to="`/absen/edit/${item.id}`" class="btn btn-info mr-2"><button
                                 class="button is-info is-info">Absen</button></nuxt-link>
                         <nuxt-link :to="`/jadwal/edit/${item.id}`" class="btn btn-info mr-2"><button
                                 class="button is-warning">Edit</button></nuxt-link>
